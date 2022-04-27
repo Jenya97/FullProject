@@ -6,3 +6,11 @@
     background: linear-gradient(42.14deg, #9796F0 -17.31%, #EBBFD9 86.49%, #FBC7D4 106.72%);
      height: 118px;
   }
+
+  ul{
+     list-style: none;
+  }
+  a{
+     text-decoration: none;
+  }
+ 

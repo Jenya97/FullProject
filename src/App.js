@@ -1,27 +1,30 @@
-import './App.css';
-import Production from './Components/Pages/Production';
-import Collections from './Components/Pages/Collections';
-import AllProduct from './Components/Pages/AllProduct';
-import NotFound from './Components/Pages/NotFound';
-import Sewing from './Components/Pages/Sewing';
-import Home from './Components/Pages/Home';
-import Informations from './Components/Pages/Informations';
-import Layout from './Components';
-import {Routes, Route} from 'react-router-dom'
-function App() {
-  return (
-    <Routes>
-    <Route path='/' element={<Layout/>}>
-    <Route index path='/' element={<Home/>}/>
-    <Route path='/production' element={<Production/>}/>
-    <Route path='/collections' element={<Collections/>}/>
-    <Route path='/allproduct' element={<AllProduct/>}/>
-    <Route path='/sewing' element={<Sewing/>}/>
-    <Route path='/information' element={<Informations/>}/>
-    <Route path='*' element={<NotFound/>}/>
-    </Route>
-    </Routes>
-  );
-}
+import { useSelector,useDispatch } from "react-redux";
+import { useState,useEffect} from "react";
+import Users from "./Users";
+import {createAdd} from './store/Slicer/counter';
+import { createPeople } from "./store/Slicer/people";
+export default function App() {
+  const [mard,setMard]=useState('');
+  const dispatch=useDispatch();
+  const people=useSelector((state)=>state.People)
+  const data=useSelector(state=>state.fetch);
+ 
+  useEffect(()=>{
+    if(mard){
+      dispatch(createPeople(mard))
+    }
 
-export default App;
+  },[mard])
+console.log(people);
+  return (
+    <>
+ 
+ <button onClick={()=>setMard(prompt())}>add</button>
+{people.length!==0 ? people.map(i=>(
+  <h2 key={i.id}>{i.name}</h2> ))  : null}
+  {!data.loading ? data.user.map(i=>(
+    <h2>{i.name}</h2>
+  )) : null}
+    </>
+  )
+}
